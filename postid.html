@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Get PostId for Blogger</title>
+		
+		<style>
+			.edit-url-form,
+			.urls-form,
+			.postid-form {
+				list-style-type: none;
+			}
+		</style>
+		<script src='postid.js'></script>
+	</head>
+
+	<body>
+		<h2>URL</h2>
+		<form>
+			<ul class='edit-url-form'>
+				<li>
+					<input type='url' id='url'>
+					<input type='button' value='Add URL' id='add-url'>
+				</li>
+			</ul>
+			<ul class='urls-form'>
+				<li>
+					<select name='url-list' size='5' id='url-list'></select>
+					<input type='button' value='Save URLs' id='save-urls'>
+				</li>
+			</ul>
+			<ul class='postid-form'>
+				<li>
+					<input type='button' value='Get PostId' id='get-postid'>
+				</li>
+			</ul>
+		</form>
+		
+		<h2>Result</h2>
+		<div id='result'>
+		</div>
+	</body>
+</html>
