@@ -73,7 +73,7 @@ function loadUrls(key, selector)
 
 function getPostId(blogUrl, maxResults, selector)
 {
-	// ƒtƒB[ƒhURL‚ğì¬‚·‚éB
+	// ãƒ•ã‚£ãƒ¼ãƒ‰URLã‚’ä½œæˆã™ã‚‹ã€‚
 	var feedUrl = blogUrl;
 	feedUrl += 'feeds/posts/summary';
 	feedUrl += '?orderby=published';
@@ -81,7 +81,7 @@ function getPostId(blogUrl, maxResults, selector)
 	feedUrl += maxResults;
 	feedUrl += '&alt=json';
 
-	// ƒtƒB[ƒh‚ğæ“¾‚·‚éB
+	// ãƒ•ã‚£ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹ã€‚
 	fetch(feedUrl)
 		.then((response) => {
 			console.log(feedUrl);
@@ -95,7 +95,7 @@ function getPostId(blogUrl, maxResults, selector)
 		.then(function(json) {
 			console.log(json);
 
-			// ‹L–‘”Aƒy[ƒW‘”‚ğZo‚·‚éB
+			// è¨˜äº‹ç·æ•°ã€ãƒšãƒ¼ã‚¸ç·æ•°ã‚’ç®—å‡ºã™ã‚‹ã€‚
 			var totalResults = parseInt(json.feed.openSearch$totalResults.$t, 10);
 			var startIndex   = parseInt(json.feed.openSearch$startIndex.$t, 10);
 			var itemsPerPage = parseInt(json.feed.openSearch$itemsPerPage.$t, 10);
@@ -108,16 +108,16 @@ function getPostId(blogUrl, maxResults, selector)
 			console.log('totalResults=' + totalResults);
 			console.log('totalPage=' + totalPage);
 
-			// Œ‹‰Ê‚ğHTML‚É®Œ`‚·‚éB
+			// çµæœã‚’HTMLã«æ•´å½¢ã™ã‚‹ã€‚
 			var pager = '<table><tbody>';
 			
 			pager += '<thead><tr>';
-			pager += '<th>No</th><th>Post id</th><th>Title</th>';
+			pager += '<th>No</th><th>Post id</th><th>Title</th><th>Published</th><th>Updated</th>';
 			pager += '</tr><thead>';
 			
 			for (i = 0; i < totalResults; ++i)
 			{
-				// id‚ÍˆÈ‰º‚ÌŒ`®B
+				// idã¯ä»¥ä¸‹ã®å½¢å¼ã€‚
 				// $t = "tag:blogger.com,1999:blog-XXXXXXXXXXXXXXXXXXX.post-XXXXXXXXXXXXXXXXXXX"
 
 				var idstr = json.feed.entry[i].id.$t;
@@ -130,12 +130,16 @@ function getPostId(blogUrl, maxResults, selector)
 				console.log(id);
 				
 				pager += '<tr>';
-				pager += '<td>' + i + '</td><td>' + postid[1] + '</td><td>' + json.feed.entry[i].title.$t + '</td>';
+				pager += '<td>' + i + '</td>';
+				pager += '<td>' + postid[1] + '</td>';
+				pager += '<td>' + json.feed.entry[i].title.$t + '</td>';
+				pager += '<td>' + json.feed.entry[i].published.$t + '</td>';
+				pager += '<td>' + json.feed.entry[i].updated.$t + '</td>';
 				pager += '</tr>';
 			}
 			pager +='</tbody></table>';
 
-			// HTML‚Ö‘‚«o‚·B
+			// HTMLã¸æ›¸ãå‡ºã™ã€‚
 			var pagerElem = document.querySelector(selector);
 			if (null != pagerElem)
 			{
